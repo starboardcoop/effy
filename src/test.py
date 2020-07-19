@@ -2,7 +2,7 @@ import unittest
 from main import OrgData
 
 
-class YamlReaderTests(unittest.TestCase):
+class OrgDataTests(unittest.TestCase):
 
     def test_OrgData_load(self):
         data = OrgData.load()
