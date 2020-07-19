@@ -1,12 +1,11 @@
 import unittest
-from main import read_file
 from main import OrgData
 
 
 class YamlReaderTests(unittest.TestCase):
 
-    def test_read_file(self):
-        data = read_file()
+    def test_OrgData_load(self):
+        data = OrgData.load()
         self.assertEqual(3, len(data.people))
         self.assertEqual(3, len(data.standings))
 
