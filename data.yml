@@ -1,0 +1,14 @@
+standings:
+  - name: apprentice
+    rate: 0.5
+  - name: member
+    rate: 0.75
+  - name: mega-member
+    rate: 1.0
+people:
+  - name: Jane
+    standing: member
+  - name: Jack
+    standing: apprentice
+  - name: Jesús
+    standing: mega-member
