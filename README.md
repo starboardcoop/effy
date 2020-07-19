@@ -5,7 +5,7 @@ An app for calculating remuneration based on effort and personal sacrifice.
 
 The user of **effy** should have a `data.yml` file, which includes people's names and their "standing," which is essentially their seniority. A record at the top of the file determines the multiplier for each standing level.
 
-```
+```yaml
 standings:
   - name: apprentice
     rate: 0.5
