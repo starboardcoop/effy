@@ -42,5 +42,7 @@ class Cli:
     
     def calculate_shares(self):
         for person in self.personal_points:
-            share = (person[1] / self.total_points) * 100
+            standing = list(filter(lambda p: p['name'] == person[0], self.data.people))[0]['standing']
+            multiplier = float(list(filter(lambda m: m['name'] == standing, self.data.standings))[0]['rate'])
+            share = person[1] * multiplier / self.total_points * 100
             print(f"{person[0]} -> {share}%")
