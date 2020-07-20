@@ -1,3 +1,4 @@
+import math
 from orgdata import OrgData
 
 
@@ -36,11 +37,17 @@ class Cli:
         for rating in ratings:
             frags = rating.split(' ')
             name = frags[0]
-            points = sum(list(map(int, frags[1:])))
+            standing = list(filter(lambda p: p['name'] == name, self.data.people))[0]['standing']
+            multiplier = float(list(filter(lambda m: m['name'] == standing, self.data.standings))[0]['rate'])
+            points = sum(list(map(int, frags[1:]))) * multiplier
             self.personal_points.append((name, points))
             self.total_points += points
     
     def calculate_shares(self):
+        remainder = 0.0
         for person in self.personal_points:
-            share = (person[1] / self.total_points) * 100
-            print(f"{person[0]} -> {share}%")
+            share = person[1] / self.total_points * 100
+            truncated_share = math.trunc(share)
+            remainder += share - truncated_share
+            print(f"{person[0]} -> {truncated_share}%")
+        print(f"Remainder -> {remainder}%")
