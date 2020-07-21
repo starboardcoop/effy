@@ -1,4 +1,5 @@
 import math
+from blessings import Terminal
 from orgdata import OrgData
 
 
@@ -7,11 +8,12 @@ class Cli:
         self.data = OrgData.load()
         self.total_points = 0
         self.personal_points = []
+        self.terminal = Terminal()
 
     def run(self):
         self.list_names()
-        print("Please enter a person's name and their effort ratings, separated by spaces.")
-        print("Add a comma to the end of each line to continue to the next person.")
+        self.print_prompt("Please enter a person's name and their effort ratings, separated by spaces.")
+        self.print_prompt("Add a comma to the end of each line to continue to the next person.")
         ratings = self.get_ratings()
         self.calculate_points(ratings)
         self.calculate_shares()
@@ -19,7 +21,7 @@ class Cli:
     def list_names(self):
         text = 'People: '
         for (i, person) in enumerate(self.data.people):
-            text += person['name']
+            text += self.terminal.bold_yellow(person['name'])
             if i < len(self.data.people) - 1:
                 text += ' | '
         print(text)
@@ -49,5 +51,13 @@ class Cli:
             share = person[1] / self.total_points * 100
             truncated_share = math.trunc(share)
             remainder += share - truncated_share
-            print(f"{person[0]} -> {truncated_share}%")
-        print(f"Remainder -> {remainder}%")
+            self.print_result(person[0], truncated_share)
+        self.print_result('Remainder', remainder)
+    
+    def print_prompt(self, prompt):
+        print(self.terminal.italic(prompt))
+
+    def print_result(self, label, percentage):
+        left = self.terminal.bold_yellow(f"{label}")
+        right = self.terminal.bold_green(f"{percentage}%")
+        print(left, '->', right)
